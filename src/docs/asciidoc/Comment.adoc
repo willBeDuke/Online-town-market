@@ -1,0 +1,65 @@
+// 예시
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== COMMENT API
+
+---
+---
+
+*CreateComment*
+
+** REQUEST
+
+include::{snippets}/commentController/createComment/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/commentController/createComment/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/commentController/createComment/request-body.adoc[]
+include::{snippets}/commentController/createComment/request-fields.adoc[]
+
+
+---
+---
+
+*DeleteComment*
+
+** REQUEST
+
+include::{snippets}/commentController/deleteComment/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/commentController/deleteComment/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/commentController/deleteComment/request-body.adoc[]
+
+---
+---
+
+
+*updateComment*
+** REQUEST
+
+include::{snippets}/commentController/updateComment/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/commentController/updateComment/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/commentController/updateComment/request-body.adoc[]
+include::{snippets}/commentController/updateComment/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/commentController/updateComment/response-body.adoc[]
+include::{snippets}/commentController/updateComment/response-fields.adoc[]

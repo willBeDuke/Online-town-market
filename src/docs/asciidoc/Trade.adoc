@@ -1,0 +1,59 @@
+// 예시
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== INTEREST
+---
+---
+
+*addInterest*
+
+** REQUEST
+
+include::{snippets}/interestController/addInterest/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/interestController/addInterest/http-response.adoc[]
+
+
+*showMyInterestProducts*
+
+** REQUEST
+
+include::{snippets}/interestController/showMyInterestProducts/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/interestController/showMyInterestProducts/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/interestController/showMyInterestProducts/request-body.adoc[]
+include::{snippets}/interestController/showMyInterestProducts/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/interestController/showMyInterestProducts/response-body.adoc[]
+include::{snippets}/interestController/showMyInterestProducts/response-fields.adoc[]
+
+---
+---
+
+*checkInterest*
+
+** REQUEST
+
+include::{snippets}/interestController/checkInterest/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/interestController/checkInterest/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/interestController/checkInterest/request-body.adoc[]
+** RESPONSE - BODY
+include::{snippets}/interestController/checkInterest/response-body.adoc[]
+

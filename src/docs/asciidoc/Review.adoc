@@ -1,0 +1,111 @@
+// 예시
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== REVIEW API
+
+---
+---
+
+*CreateReview*
+
+** REQUEST
+
+include::{snippets}/reviewController/createReview/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/reviewController/createReview/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/reviewController/createReview/request-body.adoc[]
+include::{snippets}/reviewController/createReview/request-fields.adoc[]
+
+
+---
+---
+
+*DeleteReview*
+
+** REQUEST
+
+include::{snippets}/reviewController/deleteMyReview/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/reviewController/deleteMyReview/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/reviewController/deleteMyReview/request-body.adoc[]
+
+
+---
+---
+
+*showMyReviews*
+
+** REQUEST
+
+include::{snippets}/reviewController/showMyReviews/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/reviewController/showMyReviews/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/reviewController/showMyReviews/request-body.adoc[]
+include::{snippets}/reviewController/showMyReviews/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/reviewController/showMyReviews/response-body.adoc[]
+include::{snippets}/reviewController/showMyReviews/response-fields.adoc[]
+
+---
+---
+showSelectReview*
+
+** REQUEST
+
+include::{snippets}/reviewController/showSelectReview/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/reviewController/showSelectReview/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/reviewController/showSelectReview/request-body.adoc[]
+// include::{snippets}/reviewController/showSelectReview/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/reviewController/showSelectReview/response-body.adoc[]
+include::{snippets}/reviewController/showMyReviews/response-fields.adoc[]
+
+---
+---
+
+*updtateReview*
+
+** REQUEST
+
+include::{snippets}/reviewController/updateMyReview/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/reviewController/updateMyReview/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/reviewController/updateMyReview/request-body.adoc[]
+include::{snippets}/reviewController/updateMyReview/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/reviewController/updateMyReview/response-body.adoc[]
+include::{snippets}/reviewController/updateMyReview/response-fields.adoc[]

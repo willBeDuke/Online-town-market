@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <title>낙낙상회 중고거래 | 전체조회</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+</body>
+<script>
+  $(document).ready(function () {
+    getProducts()
+  });
+
+  renderPagination: function getProducts(){
+    // 현재 게시물의 전체 개수가 20개 이하면 pagination을 숨깁니다.
+    if (_totalCount <= 20) return;
+
+    const totalPage = Math.ceil(_totalCount / 20); // 총 페이지 수 = math.ceil(전체 개수/ 한 페이지에 나타날 data 수);
+    const pageGroup = Math.ceil(currentPage / 10); // 화면에 보여질 페이지 그룹 = math.ceil(현재 페이지/ 한 화면에 나타날 페이지 수);
+
+    let last = pageGroup * 10; // 화면에 보이는 마지막 페이지
+    if (last > totalPage) {
+      last = totalPage;
+    } // 마지막 페이지의 값이 총 페이지보다 많으면 둘은 같다
+    const first = last - (10 - 1) <= 0 ? 1 : last - (10 - 1); // 첫번째 페이지 = 마지막 페이지 - ( 한 화면에 나타날 페이지 수 - 1)
+    const next = last + 1;
+    const prev = first - 1;
+
+    const fragmentPage = document.createDocumentFragment();
+    if (prev > 0) { // 맨 처음으로, 이전으로 페이지 전환하기
+      let allpreli = document.createElement('li');
+      allpreli.insertAdjacentHTML("beforeend", `<a href='#js-bottom' id='allprev'>&lt;&lt;</a>`);
+
+      let preli = document.createElement('li');
+      preli.insertAdjacentHTML("beforeend", `<a href='#js-ottom' id='prev'>&lt;</a>`);
+
+      fragmentPage.appendChild(allpreli);
+      fragmentPage.appendChild(preli);
+    }
+
+    for (var i = first; i <= last; i++) { // 페이지 리스트 번호 출력하기
+      const li = document.createElement("li");
+      li.insertAdjacentHTML("beforeend",
+          `<a href='#js-bottom' id='page-${i}' data-num='${i}'>${i}</a>`);
+      fragmentPage.appendChild(li);
+    }
+
+    if (last < totalPage) { // 맨 뒤로, 다음으로 페이지 전환
+      var allendli = document.createElement('li');
+      allendli.insertAdjacentHTML("beforeend", `<a href='#js-bottom'  id='allnext'>&gt;&gt;</a>`);
+
+      var endli = document.createElement('li');
+      endli.insertAdjacentHTML("beforeend", `<a  href='#js-bottom'  id='next'>&gt;</a>`);
+
+      fragmentPage.appendChild(endli);
+      fragmentPage.appendChild(allendli);
+    }
+
+    // 페이지 목록 생성하기
+    document.getElementById('js-pagination').appendChild(fragmentPage);
+  }
+
+  $(`#js-pagination a`).removeClass("active");
+  $(`#js-pagination a#page-${currentPage}`).addClass("active");
+
+  $("#js-pagination a").click(function (e) {
+    e.preventDefault();
+    var $item = $(this);
+    var $id = $item.attr("id");
+    var selectedPage = $item.text();
+
+    if ($id == "next") selectedPage = next;
+    if ($id == "prev") selectedPage = prev;
+    if ($id == "allprev") selectedPage = 1;
+    if ($id == "allnext") selectedPage = totalPage;
+
+    list.renderPagination(selectedPage); // 페이지네이션 그리는 함수
+    list.search(selectedPage); // 페이지 그리는 함수
+  });
+</script>
+</html>

@@ -1,0 +1,108 @@
+// 예시
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== BOARD API
+
+---
+---
+
+*createBoard*
+
+** REQUEST
+
+include::{snippets}/boardController/createBoard/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/boardController/createBoard/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/boardController/createBoard/request-body.adoc[]
+include::{snippets}/boardController/createBoard/request-fields.adoc[]
+
+
+---
+---
+
+*DeleteBoard*
+
+** REQUEST
+
+include::{snippets}/boardController/deleteBoard/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/boardController/deleteBoard/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/boardController/deleteBoard/request-body.adoc[]
+// include::{snippets}/boardController/deleteBoard/request-fields.adoc[]
+
+
+---
+---
+
+
+*showMyBoards*
+
+** REQUEST
+
+include::{snippets}/boardController/getBoards/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/boardController/getBoards/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/boardController/getBoards/request-body.adoc[]
+include::{snippets}/boardController/getBoards/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/boardController/getBoards/response-body.adoc[]
+include::{snippets}/boardController/getBoards/response-fields.adoc[]
+
+---
+---
+showSelectBoard*
+
+** REQUEST
+
+include::{snippets}/boardController/getBoard/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/boardController/getBoard/http-response.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/boardController/getBoard/response-body.adoc[]
+include::{snippets}/boardController/getBoard/response-fields.adoc[]
+
+---
+---
+
+*updtateBoard*
+
+** REQUEST
+
+include::{snippets}/boardController/updateBoard/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/boardController/updateBoard/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/boardController/updateBoard/request-body.adoc[]
+// include::{snippets}/boardController/deleteBoard/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/boardController/updateBoard/response-body.adoc[]
+include::{snippets}/boardController/updateBoard/response-fields.adoc[]

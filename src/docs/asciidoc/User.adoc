@@ -1,0 +1,176 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== USER API
+
+---
+---
+
+*Signup*
+
+** REQUEST
+
+include::{snippets}/userController/signup/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/signup/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/userController/signup/request-body.adoc[]
+include::{snippets}/userController/signup/request-fields.adoc[]
+
+
+---
+---
+
+*login*
+
+** REQUEST
+
+include::{snippets}/userController/login/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/login/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/userController/login/request-body.adoc[]
+include::{snippets}/userController/login/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/userController/login/response-body.adoc[]
+include::{snippets}/userController/login/response-fields.adoc[]
+
+---
+---
+*logout*
+
+** REQUEST
+
+include::{snippets}/userController/logout/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/logout/http-response.adoc[]
+
+
+** RESPONSE - BODY
+
+include::{snippets}/userController/logout/response-body.adoc[]
+include::{snippets}/userController/logout/response-fields.adoc[]
+
+---
+---
+*delete*
+
+** REQUEST
+
+include::{snippets}/userController/delete/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/delete/http-response.adoc[]
+
+---
+---
+*duplicate*
+
+** REQUEST
+
+include::{snippets}/userController/duplicate/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/duplicate/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/userController/duplicate/request-body.adoc[]
+include::{snippets}/userController/duplicate/request-fields.adoc[]
+
+---
+---
+*getMyProfile*
+
+** REQUEST
+
+include::{snippets}/userController/get-my-profile/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/get-my-profile/http-response.adoc[]
+
+
+** RESPONSE - BODY
+
+include::{snippets}/userController/get-my-profile/response-body.adoc[]
+include::{snippets}/userController/get-my-profile/response-fields.adoc[]
+
+---
+---
+*showProfile*
+
+** REQUEST
+
+include::{snippets}/userController/show-profile/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/show-profile/http-response.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/userController/show-profile/response-body.adoc[]
+include::{snippets}/userController/show-profile/response-fields.adoc[]
+
+---
+---
+*updatePw*
+
+** REQUEST
+
+include::{snippets}/userController/update-pw/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/userController/update-pw/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/userController/update-pw/request-body.adoc[]
+include::{snippets}/userController/update-pw/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/userController/update-pw/response-body.adoc[]
+include::{snippets}/userController/update-pw/response-fields.adoc[]
+
+---
+---
+// *updaetRegion*
+//
+// ** REQUEST
+//
+// include::{snippets}/userController/update-region/http-request.adoc[]
+//
+// ** RESPONSE
+//
+// include::{snippets}/userController/update-region/http-response.adoc[]
+//
+// ** REQUEST - BODY
+//
+// include::{snippets}/userController/update-region/request-body.adoc[]
+// include::{snippets}/userController/update-region/request-fields.adoc[]
+//
+// ** RESPONSE - BODY
+//
+// include::{snippets}/userController/update-region/response-body.adoc[]
+// include::{snippets}/userController/update-region/response-fields.adoc[]
+//
+// ---
+// ---

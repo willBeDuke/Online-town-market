@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+        crossorigin="anonymous">
+  <title>낙낙상회 중고거래 | 상세조회</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<body>
+<div id="product-detail">
+
+</div>
+</body>
+<script>
+  $(document).ready(function () {
+    getProduct()
+  })
+
+  function getProduct() {
+    let id = getProductIdFromUrl();
+    $.ajax({
+      type: "GET", // Post? CORS에 맞춰 고치기
+      url: '/products/{productId}',
+      datatype: JSON,
+      data: {'id_give': id},
+      success: function (response) { // 다른 인스턴스를 모두 받아오는 방법??
+        let productName = response.productName;
+        let productPrice = response.productPrice;
+        // 상세페이지 꾸미기
+        let temp_html = `<div class="container-md">
+  <div class="card-body">
+    <p>${productName}</p>
+    <p>${productPrice}</p>
+  </div>
+</div>`
+        $('#product-detail').append(temp_html)
+      }
+    })
+  }
+
+  function getProductIdFromUrl() {
+    // Get the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // Get the product ID parameter
+    return urlParams.get('id');
+  }
+</script>
+</html>

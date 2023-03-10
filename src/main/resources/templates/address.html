@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script type="text/javascript"
+          src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f4c09d486f1f49e48a1490b5808b62b2"></script>
+  <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <title>Main</title>
+  <style>
+    #locationForm {
+      width: 538px;
+      height: 310px;
+      margin: 70px auto 141px auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 20px;
+      padding: 56px 0 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 25px 0 rgba(0, 0, 0, 0.15);
+      background-color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+<form th:action="@{/user/lon-lat}" method="POST" style="display: none">
+  <input type="hidden" name="_method" value="PUT">
+  위도
+  <input type="text" id="x" name="x" readonly/>
+  <br>
+  경도
+  <input type="text" id="y" name="y" readonly/>
+  <button type="submit">등록</button>
+</form>
+<div id="map" style="width:500px;height:400px; display: none"></div>
+<br>
+
+<div id="locationForm">
+  <div id="myLocationInfo" style="display: none">좌표값 오류 X</div>
+  <button type="submit" onclick="getFullAddress()">현재 위치로 거래하기</button>
+  <div id="clickLatlng"></div>
+  <div>
+    <button type="submit" id="findAddress" onclick="toXY();">주소 검색하기</button>
+    주소 입력하기 : <input type="text" placeholder="검색하려면 여길 눌러주세요">
+  </div>
+  <div id="fullAddress"></div>
+</div>
+</body>
+
+<script>
+  function toXY() {
+    var address = $("#findAddress").val();
+    console.log("current address : " + address);
+    if (address.length > 0) {
+      // 만약 주소값이 입력되었다면 ajax호출
+
+      $.ajax({
+        type: "GET",
+        url: "/users/search/geo",
+        data: {fullAddress: address},
+      }).done(function (fragment) {
+
+        console.log('x: ' + fragment.x);
+        console.log('y: ' + fragment.y);
+
+        // x,y, 현재 위치 바꿔주기
+        x.value = fragment.x;
+        y.value = fragment.y;
+        $("#fullAddress").text(address);
+
+        createKaKaoMap(fragment.y, fragment.x);
+      });
+    }
+  }
+
+  window.onload = function () {
+    document.getElementById("findAddress").addEventListener("click", function () { //주소입력칸을 클릭하면
+      //카카오 지도 발생
+      new daum.Postcode({
+        oncomplete: function (data) { //선택시 입력값 세팅
+          document.getElementById("findAddress").value = data.address; // 주소 넣기
+          document.getElementById("y").focus(); // 좌표값 변경 후 닫기 및 focus 이동
+        }
+      }).open();
+    });
+  }
+
+  /* 비동기적으로 현재 위치를 알아내어 지정된 요소에 출력한다. */
+  function whereami(elt) {
+    // 이 객체를 getCurrentPosition() 메서드의 세번째 인자로 전달한다.
+    var options = {
+      // 가능한 경우, 높은 정확도의 위치(예를 들어, GPS 등) 를 읽어오려면 true로 설정
+      // 그러나 이 기능은 배터리 지속 시간에 영향을 미친다.
+      enableHighAccuracy: false, // 대략적인 값이라도 상관 없음: 기본값
+
+      // 위치 정보가 충분히 캐시되었으면, 이 프로퍼티를 설정하자,
+      // 위치 정보를 강제로 재확인하기 위해 사용하기도 하는 이 값의 기본 값은 0이다.
+      maximumAge: 30000,     // 5분이 지나기 전까지는 수정되지 않아도 됨
+
+      // 위치 정보를 받기 위해 얼마나 오랫동안 대기할 것인가?
+      // 기본값은 Infinity이므로 getCurrentPosition()은 무한정 대기한다.
+      timeout: 15000    // 15초 이상 기다리지 않는다.
+    }
+
+    if (navigator.geolocation) // geolocation 을 지원한다면 위치를 요청한다.
+    {
+      navigator.geolocation.getCurrentPosition(success, error, options);
+    } else {
+      elt.innerHTML = "이 브라우저에서는 Geolocation이 지원되지 않습니다.";
+    }
+
+    // geolocation 요청이 실패하면 이 함수를 호출한다.
+    function error(e) {
+      // 오류 객체에는 수치 코드와 텍스트 메시지가 존재한다.
+      // 코드 값은 다음과 같다.
+      // 1: 사용자가 위치 정보를 공유 권한을 제공하지 않음.
+      // 2: 브라우저가 위치를 가져올 수 없음.
+      // 3: 타임아웃이 발생됨.
+      elt.innerHTML = "Geolocation 오류 " + e.code + ": " + e.message;
+    }
+
+    // geolocation 요청이 성공하면 이 함수가 호출된다.
+    function success(pos) {
+
+      console.log(pos); // [디버깅] Position 객체 내용 확인
+
+      // 항상 가져올 수 있는 필드들이다. timestamp는 coords 객체 내부에 있지 않고,
+      // 외부에서 가져오는 필드라는 점에 주의하다.
+      x.value = pos.coords.longitude;
+      y.value = pos.coords.latitude;
+
+      createKaKaoMap(pos.coords.latitude, pos.coords.longitude);
+      getFullAddress(pos.coords.longitude, pos.coords.latitude);
+    }
+  }
+
+  function createKaKaoMap(lat, lon) {
+    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+    var options = { //지도를 생성할 때 필요한 기본 옵션
+      center: new kakao.maps.LatLng(lat, lon), //지도의 중심좌표.
+      level: 3 //지도의 레벨(확대, 축소 정도)
+    };
+
+    var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+    // 지도를 클릭한 위치에 표출할 마커입니다
+    var marker = new kakao.maps.Marker({
+      // 지도 중심좌표에 마커를 생성합니다
+      position: map.getCenter()
+    });
+    // 지도에 마커를 표시합니다
+    marker.setMap(map);
+
+    kakao.maps.event.addListener(map, 'click', function (mouseEvent) {
+
+      // 클릭한 위도, 경도 정보를 가져옵니다
+      var latlng = mouseEvent.latLng;
+
+      // 마커 위치를 클릭한 위치로 옮깁니다
+      marker.setPosition(latlng);
+
+      // 마커 이동후 클릭한 위치에 맞게 위도, 경도 설정
+      x.value = latlng.getLng();
+      y.value = latlng.getLat();
+      var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+      message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+      var resultDiv = document.getElementById('clickLatlng');
+      resultDiv.innerHTML = message;
+      getFullAddress(latlng.getLng(), latlng.getLat());
+    });
+  }
+
+  // 지도에 클릭 이벤트를 등록합니다
+  // 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+  function getFullAddress(longtitude, latitude) {
+    var AddressRequest = {
+      x: longtitude,
+      y: latitude
+    };
+
+    $.ajax({
+      url: "/users/search/reverse-geo",
+      data: AddressRequest,
+      type: "GET",
+    }).done(function (fragment) {
+      console.log(fragment);
+      $("#fullAddress").text(fragment);
+    });
+  }
+
+  // 나의 위치정보를 출력할 객체 구하기
+  var elt = document.getElementById("myLocationInfo");
+  var x = document.getElementById("x");
+  var y = document.getElementById("y");
+
+  // 나의 위치정보 출력하기
+  whereami(elt);
+</script>
+</html>

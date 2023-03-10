@@ -1,0 +1,26 @@
+// 예시
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== REPORT - USER API
+
+---
+---
+
+*reportUser*
+
+** REQUEST
+
+include::{snippets}/reportController/reportUser/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/reportController/reportUser/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/reportController/reportUser/request-body.adoc[]
+include::{snippets}/reportController/reportUser/request-fields.adoc[]
+
+

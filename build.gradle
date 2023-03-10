@@ -1,0 +1,179 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.2'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
+    id 'jacoco'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    asciidoctorExtensions
+
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+jar {
+    enabled = false
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+//tasks.named('test') {
+//    useJUnitPlatform()
+//    systemProperty "jasypt.encryptor.password", System.getProperties().get("jasypt.encryptor.password")
+//}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+//    runtimeOnly 'com.h2database:h2'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+
+    implementation 'org.jasypt:jasypt:1.9.3'
+    //querydsl 의존성
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    implementation 'org.webjars:webjars-locator-core'
+
+    asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    //채팅 관련 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.webjars.bower:bootstrap:4.3.1'
+    implementation 'org.webjars:sockjs-client:1.1.2'
+    implementation 'org.webjars:stomp-websocket:2.3.3-1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+
+    // Jasypt properties 암호화
+    implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
+
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    testImplementation group: 'it.ozimov', name: 'embedded-redis', version: '0.7.2'
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+    // json 파싱용
+    implementation 'org.jsoup:jsoup:1.14.3'
+    implementation 'org.json:json:20220320'
+
+    // S3 업로드
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    //mysql
+    implementation 'mysql:mysql-connector-java'
+
+//    implementation 'com.navercorp.lucy:lucy-xss-servlet:2.0.1'
+//    implementation group: 'com.navercorp.lucy', name: 'lucy-xss-servlet', version: '2.0.1'
+//    implementation group: 'com.navercorp.lucy', name: 'lucy-xss', version: '1.6.3'
+    implementation group: 'commons-logging', name: 'commons-logging', version: '1.2'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'org.apache.commons', name: 'commons-text', version: '1.10.0'
+
+
+}
+
+test {
+    jacoco{
+        destinationFile = file("build/reports/jacoco/jacoco.exec")
+    }
+    outputs.dir snippetsDir
+    useJUnitPlatform()
+//    finalizedBy 'asciidoctor'
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    configurations 'asciidoctorExtensions' // 이부분!
+    dependsOn test
+}
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"
+        into 'src/main/resources/static/docs'
+    }
+}
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc/**")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+jacocoTestReport {
+    reports {
+        // 원하는 리포트를 켜고 끌 수 있습니다.
+        html.enabled true
+        xml.enabled false
+        csv.enabled false
+
+//  각 리포트 타입 마다 리포트 저장 경로를 설정할 수 있습니다.
+  html.destination file("build/reports/jacoco/jacocoHtml")
+//  xml.destination file("$buildDir/jacoco.xml")
+    }
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, excludes: [
+                            '**/*Application*',
+                            '**/enums/**',
+                            '**/dto/**',
+                            '**/config/**',
+                            '**/security/**',
+                            '**/redis/**',
+                            '**/jwt/**',
+                            '**/security/**',
+                            '**/repository/**',
+                            '**/entity/**',
+                            '**/oauth/**',
+                            '**/globalException/**'
+                    ])
+                })
+        )
+    }
+}

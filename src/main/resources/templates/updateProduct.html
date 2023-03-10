@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form id="update-product-form">
+  <label for="productNameUpdate">Product name:</label>
+  <input type="text" id="productNameUpdate" name="name" required>
+
+  <label for="productPriceUpdate">Product price:</label>
+  <input type="number" id="productPriceUpdate" name="price" min="0" required>
+
+  <button onclick="updateproduct()">Update product</button>
+</form>
+</body>
+<script>
+
+  function updateproduct() {
+    let productNameUpdate = $("#_productName").val();
+    let productPriceUpdate = $("#productPrice").val();
+
+    $.ajax({
+      type: "PUT",
+      url: '/update/{productId}',
+      datatype: JSON,
+      data: {
+        "productName_give": productNameUpdate,
+        "productPrice_give": productPriceUpdate
+      },
+      success: function(data) {
+        $("#UpdateProduct").submit(data);
+      }
+    })
+  }
+</script>
+</html>

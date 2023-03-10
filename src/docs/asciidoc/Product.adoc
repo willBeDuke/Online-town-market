@@ -1,0 +1,112 @@
+// 예시
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== PRODUCT API
+
+---
+---
+
+*addProduct*
+
+** REQUEST
+
+include::{snippets}/productController/addProduct/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/productController/addProduct/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/productController/addProduct/request-body.adoc[]
+include::{snippets}/productController/addProduct/request-fields.adoc[]
+
+
+
+---
+---
+
+*DeleteProduct*
+
+** REQUEST
+
+include::{snippets}/productController/deleteProduct/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/productController/deleteProduct/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/productController/deleteProduct/request-body.adoc[]
+
+
+---
+---
+
+*getProductId*
+
+** REQUEST
+
+include::{snippets}/productController/getProductId/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/productController/getProductId/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/productController/getProductId/request-body.adoc[]
+// include::{snippets}/productController/getProductId/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/productController/getProductId/response-body.adoc[]
+include::{snippets}/productController/getProductId/response-fields.adoc[]
+---
+---
+
+*getProducts*
+
+** REQUEST
+
+include::{snippets}/productController/getProducts/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/productController/getProducts/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/productController/getProducts/request-body.adoc[]
+include::{snippets}/productController/getProducts/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/productController/getProducts/response-body.adoc[]
+include::{snippets}/productController/getProducts/response-fields.adoc[]
+
+---
+---
+
+*updtateProduct*
+
+** REQUEST
+
+include::{snippets}/productController/update/http-request.adoc[]
+
+** RESPONSE
+
+include::{snippets}/productController/update/http-response.adoc[]
+
+** REQUEST - BODY
+
+include::{snippets}/productController/update/request-body.adoc[]
+include::{snippets}/productController/update/request-fields.adoc[]
+
+** RESPONSE - BODY
+
+include::{snippets}/productController/update/response-body.adoc[]
+include::{snippets}/productController/update/response-fields.adoc[]
