@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ubuntu/app"
+PROJECT_ROOT="/home/ubuntu/app/build/libs"
 JAR_FILE="$PROJECT_ROOT/townMarket-0.0.1-SNAPSHOT.jar"
 
 
