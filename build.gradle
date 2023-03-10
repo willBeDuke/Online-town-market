@@ -115,13 +115,17 @@ test {
 }
 
 asciidoctor {
-    inputs.dir snippetsDir
+//    inputs.dir snippetsDir
+    doFirst {
+        delete file('src/main/resources/static/docs')
+        mkdir "$buildDir/generated-snippets"
+    }
     configurations 'asciidoctorExtensions' // 이부분!
     dependsOn test
 }
-asciidoctor.doFirst {
-    delete file('src/main/resources/static/docs')
-}
+//asciidoctor.doFirst {
+//    delete file('src/main/resources/static/docs')
+//}
 
 bootJar {
     dependsOn asciidoctor
