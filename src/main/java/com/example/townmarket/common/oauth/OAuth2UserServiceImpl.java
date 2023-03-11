@@ -1,7 +1,9 @@
 package com.example.townmarket.common.oauth;
 
+import com.example.townmarket.common.domain.user.entity.Profile;
 import com.example.townmarket.common.domain.user.entity.User;
 import com.example.townmarket.common.domain.user.repository.UserRepository;
+import com.example.townmarket.common.domain.user.service.UserService;
 import com.example.townmarket.common.enums.RoleEnum;
 import com.example.townmarket.common.oauth.dto.OAuthDto;
 import com.example.townmarket.common.security.UserDetailsImpl;
@@ -23,7 +25,6 @@ public class OAuth2UserServiceImpl implements OAuth2UserService<OAuth2UserReques
 
   private final UserRepository userRepository;
 
-
   @Override
   public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
     OAuth2User oAuth2User = new DefaultOAuth2UserService().loadUser(userRequest);
@@ -40,8 +41,10 @@ public class OAuth2UserServiceImpl implements OAuth2UserService<OAuth2UserReques
   }
 
   private User createUser(String email, String userName, String password, RoleEnum role) {
+    Profile profile = new Profile("nick"+UUID.randomUUID().toString().substring(0,4));
+
     User user = userRepository.save(
-        User.builder().password(password).email(email).username(userName).role(role)
+        User.builder().password(password).email(email).username(userName).role(role).profile(profile)
             .build());
     return user;
   }

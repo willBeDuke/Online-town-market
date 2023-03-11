@@ -8,6 +8,7 @@ import com.example.townmarket.common.domain.user.repository.UserRepository;
 import com.example.townmarket.common.security.UserDetailsImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -44,20 +45,17 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     if (userRepository.existsByEmail(email)) {
       String refreshToken = jwtUtil.createRefreshToken(username, user.getRole());
       String accessToken = jwtUtil.createAccessToken(username, user.getRole());
-//       프론트 엔드에 전달할 응답 생성
-//      Map<Object, Object> data = new HashMap<>();
-//
-//      data.put("username", username);
-//      data.put("accessToken", accessToken);
-//      data.put("refreshToken", refreshToken);
 
       response.setContentType("application/json");
 //      ResponseEntity responseEntity = ResponseEntity.status(HttpStatus.OK).body(model);
 //      new ObjectMapper().writeValue(response.getOutputStream(), data);
-      String redirectUrl = "http://localhost:5500/index.html";
-
-      response.addHeader(JwtUtil.AUTHORIZATION_HEADER, accessToken);
-      response.addHeader(JwtUtil.REFRESH_HEADER, refreshToken);
+      String redirectUrl = "https://www.knock-knock.shop/index.html";
+      Cookie cookie1 = new Cookie("accessToken", accessToken.substring(7));
+      Cookie cookie2 = new Cookie("refreshToken", refreshToken.substring(7));
+      cookie1.setPath("/");
+      cookie2.setPath("/");
+      response.addCookie(cookie1);
+      response.addCookie(cookie2);
       response.sendRedirect(redirectUrl);
 
 //      response.sendRedirect("http://localhost:5500/index.html");
