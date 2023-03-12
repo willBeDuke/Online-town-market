@@ -19,7 +19,7 @@ public class S3Controller {
   // 이미지 프로필용
   @PostMapping("/api/images/upload/profiles")
   public String imageUploadProfile(@RequestParam("profile") MultipartFile multipartFile) throws IOException {
-    String s = s3Service.upload(multipartFile, "online-town-market", "profile");
+    String s = s3Service.upload(multipartFile, "knock-knock-image-bucket-1", "profile");
     System.out.println(s);
     return s;
   }
@@ -27,7 +27,7 @@ public class S3Controller {
   // 이미지 상품용
   @PostMapping("/api/images/upload/products")
   public String imageUploadProduct(@RequestParam("product") MultipartFile multipartFile) throws IOException {
-    String s = s3Service.upload(multipartFile, "online-town-market", "product");
+    String s = s3Service.upload(multipartFile, "knock-knock-image-bucket-1", "product");
     System.out.println(s);
     return s;
   }
